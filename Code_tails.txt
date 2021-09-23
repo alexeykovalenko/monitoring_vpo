@@ -1,0 +1,20 @@
+```{r echo = FALSE, out.width = '100%'}
+# Treemap численность организаций разных типов по субъектам
+treemap(subset11, #Your data frame object
+        index = c("FO_name", "type") ,  #A list of your categorical variables
+        vSize = "number" , #This is your quantitative variable
+        title = "Соотношение числа учредждений, реализующий программы ДПО, по типам, %"
+        )
+```	
+
+sort(aggregate(number~type, subset11, sum)$number, decreasing = TRUE)
+
+
+label_sum_by_type <- sort(aggregate(number~type, subset11, sum)$number, decreasing = TRUE)
+                      geom_text(aes(y=2200, label = label_sum_by_type)) +
+
+
+
+
+> subset13 = data.table(FO_name = tab13$FO_name, Subj_name = tab13$Subj_Name, type = "Программа ПП от 16 до 72 часов", number = tab13$`1`, Col_num = tab13$Col_num)
+> subset13 <- subset13[subset13$Col_num == 3]

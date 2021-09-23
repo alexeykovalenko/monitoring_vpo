@@ -1,0 +1,76 @@
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning=FALSE, message=FALSE)
+```
+
+
+```{r}
+library(tidyverse)
+library(kableExtra)
+library(data.table)
+library(DT) #экспериментировал с datatable
+```
+
+```{r}
+# Функция вывода таблицы с помощью библиотеки DT, 
+get_dt = function(top_data, col_names = c("Код_ГИВЦ" = "miccedu_id", "Организация" = "clear_name", "2013" = "ind_2013_value", "2014" = "ind_2014_value", "2015" = "ind_2015_value", "2016" = "ind_2016_value", "2017" = "ind_2017_value", "2018" = "ind_2018_value", "2019" = "ind_2019_value", "2020" = "ind_2020_value", "2021" =  "ind_2021_value"), output_file_name) {
+  datatable(top_data, colnames = col_names, extensions = 'Buttons',
+            escape = FALSE,
+            rownames = FALSE,
+            filter = 'top',
+            options = list(searching = TRUE,
+                           pageLength = 10,
+                           lengthMenu = c(8, 10, 85, 100),
+                           dom = 'Bfrtip',
+                           buttons = 
+                               list('colvis', list(
+                                   extend = 'collection',
+                                   buttons = list(list(extend='csv',
+                                                       filename = output_file_name),
+                                                  list(extend='excel',
+                                                       filename = output_file_name)),
+                                   text = 'Download'
+                               )),
+                           scrollX = TRUE,
+                           pageLength = nrow(top_data))) 
+}
+
+
+
+#Функция для импорта данных из csv файлов в переменные R (требует имя файла в кавычках и берет из каталока data рабочей директории проекта)
+import_table = function(file_name){
+    read_delim(paste0("data/", file_name), ";", 
+                 escape_double = FALSE, locale = locale(decimal_mark = ",", 
+                 grouping_mark = "", encoding = "UTF-8"), 
+                 trim_ws = TRUE)
+}
+```
+
+
+
+
+
+
+# Наименования образовательных организаций  {#ind2_info}
+
+
+
+```{r ind2_import, echo = FALSE}
+#Чтение таблицы исходных данных подраздела запись данных в переменную
+tab2 <- import_table("for_export_ind2.csv")
+
+#Факторизация переменных "Федеральный округ", "Субъект федерации"
+#tab11[c("FO_name", "Subj_Name")] <- lapply(tab11[c("FO_name", "Subj_Name")] , factor)
+
+```
+
+
+
+
+```{r tab2formation, echo = FALSE}
+#Вывод таблицы 1.1 в отчет
+get_dt(tab2, , 'tab2_data')
+```
+
+
+

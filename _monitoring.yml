@@ -1,0 +1,20 @@
+book_filename: "monitoring-miccede-convertation"
+language:
+  label:
+    fig: "Рисунок "
+    tab: "Таблица "
+    eq: 'Equation '
+    thm: 'Theorem '
+    lem: 'Lemma '
+    cor: 'Corollary '
+    prp: 'Proposition '
+    cnj: 'Conjecture '
+    def: 'Definition '
+    exm: 'Example '
+    exr: 'Exercise '
+    proof: 'Proof. '
+    remark: 'Remark. '
+    solution: 'Solution. '
+  ui:
+    chapter_name: "Раздел "
+delete_merged_file: true

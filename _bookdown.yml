@@ -1,0 +1,4 @@
+book_filename: "monitoring"
+output_dir: "docs"
+delete_merged_file: true
+# before_chapter_script: ["common_scripts.r"]
