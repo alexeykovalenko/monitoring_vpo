@@ -6,7 +6,7 @@ bookdown::gitbook:
         <li><a href="./">Показатели мониторинга вузов, проводимого Департаментом координации деятельности организаций высшего образования Министерства науки и высшего образования Российской Федерации, за 2013 - 2021</a></li>
       after: |
         <li><a href="" target="blank">Published with bookdown</a></li>
-    edit: https://github.com/rstudio/bookdown-demo/edit/master/%s
+    edit: https://github.com/alexeykovalenko/monitoring_vpo/edit/master/%s
     download: ["pdf", "epub"]
 bookdown::pdf_book:
   includes:

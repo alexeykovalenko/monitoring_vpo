@@ -13,7 +13,7 @@
   
   
   <meta property="og:description" content="Таблицы значений показателей, в разрезе вузов (образовательных организаций, реализующих программы ВПО) и годов наблюдения. Исходные данные извлечены из представленных на сайте ГИВЦ материалов (https://monitoring.miccedu.ru). The output format for this example is bookdown::gitbook." />
-  <meta name="github-repo" content="rstudio/bookdown-demo" />
+  <meta name="github-repo" content="https://github.com/alexeykovalenko/monitoring_vpo" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Page not found | Показатели мониторинга эффективности деятельности образовательных организаций высшего образования 2013 - 2021 г." />
@@ -21,9 +21,10 @@
   <meta name="twitter:description" content="Таблицы значений показателей, в разрезе вузов (образовательных организаций, реализующих программы ВПО) и годов наблюдения. Исходные данные извлечены из представленных на сайте ГИВЦ материалов (https://monitoring.miccedu.ru). The output format for this example is bookdown::gitbook." />
   
 
+<meta name="author" content="Alexey Kovalenko" />
 
 
-<meta name="date" content="2021-09-22" />
+<meta name="date" content="2021-09-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -52,8 +53,91 @@
 
 <link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="libs/datatables-binding-0.19/datatables.js"></script>
+<link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
+<script src="libs/jszip-1.10.20/jszip.min.js"></script>
+<link href="libs/dt-ext-buttons-1.10.20/css/buttons.dataTables.min.css" rel="stylesheet" />
+<script src="libs/dt-ext-buttons-1.10.20/js/dataTables.buttons.min.js"></script>
+<script src="libs/dt-ext-buttons-1.10.20/js/buttons.flash.min.js"></script>
+<script src="libs/dt-ext-buttons-1.10.20/js/buttons.html5.min.js"></script>
+<script src="libs/dt-ext-buttons-1.10.20/js/buttons.colVis.min.js"></script>
+<script src="libs/dt-ext-buttons-1.10.20/js/buttons.print.min.js"></script>
+<link href="libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet" />
+<script src="libs/nouislider-7.0.10/jquery.nouislider.min.js"></script>
+<link href="libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet" />
+<script src="libs/selectize-0.12.0/selectize.min.js"></script>
+<link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
 
 
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
 
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -74,7 +158,144 @@
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Введение</a></li>
 <li class="chapter" data-level="1" data-path="ind2_info.html"><a href="ind2_info.html"><i class="fa fa-check"></i><b>1</b> Наименования образовательных организаций</a></li>
-<li class="chapter" data-level="2" data-path="ind3_info.html"><a href="ind3_info.html"><i class="fa fa-check"></i><b>2</b> ФИО руководителя</a></li>
+<li class="chapter" data-level="2" data-path="ind18_info.html"><a href="ind18_info.html"><i class="fa fa-check"></i><b>2</b> Средний балл ЕГЭ, поступивших на бюджет</a></li>
+<li class="chapter" data-level="3" data-path="ind19_info.html"><a href="ind19_info.html"><i class="fa fa-check"></i><b>3</b> Средний балл ЕГЭ, поступивших на бюджет за исключением льготников и целевиков</a></li>
+<li class="chapter" data-level="4" data-path="ind3_info.html"><a href="ind3_info.html"><i class="fa fa-check"></i><b>4</b> ФИО руководителя</a></li>
+<li class="chapter" data-level="5" data-path="ind20_info.html"><a href="ind20_info.html"><i class="fa fa-check"></i><b>5</b> Средний балл ЕГЭ зачисленных на “контракт”</a></li>
+<li class="chapter" data-level="6" data-path="ind21_info.html"><a href="ind21_info.html"><i class="fa fa-check"></i><b>6</b> Минимальный балл ЕГЭ поступивших на обучение</a></li>
+<li class="chapter" data-level="7" data-path="ind22_info.html"><a href="ind22_info.html"><i class="fa fa-check"></i><b>7</b> Численность принятых “олимпиадников” (всероссийский и международные)</a></li>
+<li class="chapter" data-level="8" data-path="ind22а_info.html"><a href="ind22а_info.html"><i class="fa fa-check"></i><b>8</b> Доля принятых “олимпиадников”</a></li>
+<li class="chapter" data-level="9" data-path="ind23_info.html"><a href="ind23_info.html"><i class="fa fa-check"></i><b>9</b> Численность принятых “олимпиадников” (прочие олимпиады)</a></li>
+<li class="chapter" data-level="10" data-path="ind24_info.html"><a href="ind24_info.html"><i class="fa fa-check"></i><b>10</b> Численность принятых “целевиков”</a></li>
+<li class="chapter" data-level="11" data-path="ind25_info.html"><a href="ind25_info.html"><i class="fa fa-check"></i><b>11</b> Доля “целевиков” в общей численности принятых</a></li>
+<li class="chapter" data-level="12" data-path="ind26_info.html"><a href="ind26_info.html"><i class="fa fa-check"></i><b>12</b> Доля магистров в приведенном контингенте</a></li>
+<li class="chapter" data-level="13" data-path="ind27_info.html"><a href="ind27_info.html"><i class="fa fa-check"></i><b>13</b> Доля магистров-аспирантов-ординаторов-интернов в приведенном контингенте</a></li>
+<li class="chapter" data-level="14" data-path="ind28_info.html"><a href="ind28_info.html"><i class="fa fa-check"></i><b>14</b> Численность аспирантов на 100 чел. приведенного контингента</a></li>
+<li class="chapter" data-level="15" data-path="ind29_info.html"><a href="ind29_info.html"><i class="fa fa-check"></i><b>15</b> Доля выпускников других вузов в численности поступивших в магистратуру</a></li>
+<li class="chapter" data-level="16" data-path="ind30_info.html"><a href="ind30_info.html"><i class="fa fa-check"></i><b>16</b> Доля выпускников других вузов в численности магистров-аспирантов-адъюнктов-одинаторов в общей численности таковых в вузе</a></li>
+<li class="chapter" data-level="17" data-path="ind31_info.html"><a href="ind31_info.html"><i class="fa fa-check"></i><b>17</b> Доля слушателей программ ДПО (ПК и ПП) из сторонних организаций</a></li>
+<li class="chapter" data-level="18" data-path="ind32_info.html"><a href="ind32_info.html"><i class="fa fa-check"></i><b>18</b> Доля студентов-инженеров, -медиков, -педагогов в численности студентов</a></li>
+<li class="chapter" data-level="19" data-path="ind34_info.html"><a href="ind34_info.html"><i class="fa fa-check"></i><b>19</b> Доля остепененных НПР в общей численности НПР</a></li>
+<li class="chapter" data-level="20" data-path="ind35_info.html"><a href="ind35_info.html"><i class="fa fa-check"></i><b>20</b> Цитирование статей в Web of Science</a></li>
+<li class="chapter" data-level="21" data-path="ind36_info.html"><a href="ind36_info.html"><i class="fa fa-check"></i><b>21</b> Цитирование статей в Scopus</a></li>
+<li class="chapter" data-level="22" data-path="ind37_info.html"><a href="ind37_info.html"><i class="fa fa-check"></i><b>22</b> Цитирование статей в РИНЦ</a></li>
+<li class="chapter" data-level="23" data-path="ind38_info.html"><a href="ind38_info.html"><i class="fa fa-check"></i><b>23</b> Число публикаций в Web of Science на 100 НПР</a></li>
+<li class="chapter" data-level="24" data-path="ind39_info.html"><a href="ind39_info.html"><i class="fa fa-check"></i><b>24</b> Число публикаций в Scopus на 100 НПР</a></li>
+<li class="chapter" data-level="25" data-path="ind40_info.html"><a href="ind40_info.html"><i class="fa fa-check"></i><b>25</b> Число публикаций в РИНЦ на 100 НПР</a></li>
+<li class="chapter" data-level="26" data-path="ind41_info.html"><a href="ind41_info.html"><i class="fa fa-check"></i><b>26</b> Объем НИОКР</a></li>
+<li class="chapter" data-level="27" data-path="ind42_info.html"><a href="ind42_info.html"><i class="fa fa-check"></i><b>27</b> Доля доходов от НИОКР в общем объеме доходов</a></li>
+<li class="chapter" data-level="28" data-path="ind43_info.html"><a href="ind43_info.html"><i class="fa fa-check"></i><b>28</b> Удельный вес НИОКР, выполненных собственными силами</a></li>
+<li class="chapter" data-level="29" data-path="ind44_info.html"><a href="ind44_info.html"><i class="fa fa-check"></i><b>29</b> Доходы от НИОКР, внебюджет, на одного НПР</a></li>
+<li class="chapter" data-level="30" data-path="ind45_info.html"><a href="ind45_info.html"><i class="fa fa-check"></i><b>30</b> Количество лицензионных соглашений</a></li>
+<li class="chapter" data-level="31" data-path="ind46_info.html"><a href="ind46_info.html"><i class="fa fa-check"></i><b>31</b> Доля доходов от использования ОИС в доходах вуза</a></li>
+<li class="chapter" data-level="32" data-path="ind47_info.html"><a href="ind47_info.html"><i class="fa fa-check"></i><b>32</b> Доля молодых ученых в численности НПО</a></li>
+<li class="chapter" data-level="33" data-path="ind48_info.html"><a href="ind48_info.html"><i class="fa fa-check"></i><b>33</b> Доля НПР, “защитившихся” за отчетный год в общей численности НПР</a></li>
+<li class="chapter" data-level="34" data-path="ind49_info.html"><a href="ind49_info.html"><i class="fa fa-check"></i><b>34</b> Количество научных журналов, издаваемых организацией</a></li>
+<li class="chapter" data-level="35" data-path="ind50_info.html"><a href="ind50_info.html"><i class="fa fa-check"></i><b>35</b> Количество полученных грантов за отчетный год в расчете на 100 НПР</a></li>
+<li class="chapter" data-level="36" data-path="ind51_info.html"><a href="ind51_info.html"><i class="fa fa-check"></i><b>36</b> Количество публикаций в Web of Science/Scopus в расчете на 100 НПР</a></li>
+<li class="chapter" data-level="37" data-path="ind52_info.html"><a href="ind52_info.html"><i class="fa fa-check"></i><b>37</b> Цитирование статей в Web of Science /Scopus</a></li>
+<li class="chapter" data-level="38" data-path="ind53_info.html"><a href="ind53_info.html"><i class="fa fa-check"></i><b>38</b> Объем НИОКР в расчете на одного НПР</a></li>
+<li class="chapter" data-level="39" data-path="ind54_info.html"><a href="ind54_info.html"><i class="fa fa-check"></i><b>39</b> Доля иностранных (кроме СНГ) студентов в приведенном контингенте</a></li>
+<li class="chapter" data-level="40" data-path="ind55_info.html"><a href="ind55_info.html"><i class="fa fa-check"></i><b>40</b> Доля студентов из СНГ в приведенном контингенте</a></li>
+<li class="chapter" data-level="41" data-path="ind56_info.html"><a href="ind56_info.html"><i class="fa fa-check"></i><b>41</b> Доля иностранных студентов, завершивших обучение в приведенном контингенте</a></li>
+<li class="chapter" data-level="42" data-path="ind57_info.html"><a href="ind57_info.html"><i class="fa fa-check"></i><b>42</b> Доля иностранных студентов (кроме стран СНГ), завершивших обучение в приведенном контингенте</a></li>
+<li class="chapter" data-level="43" data-path="ind58_info.html"><a href="ind58_info.html"><i class="fa fa-check"></i><b>43</b> Доля иностранных студентов (СНГ), завершивших обучение в приведенном контингенте</a></li>
+<li class="chapter" data-level="44" data-path="ind59_info.html"><a href="ind59_info.html"><i class="fa fa-check"></i><b>44</b> Доля студентов, обучавшихся за не менее семестра за рубежом в общей численности очников</a></li>
+<li class="chapter" data-level="45" data-path="ind60_info.html"><a href="ind60_info.html"><i class="fa fa-check"></i><b>45</b> Численность интостранных студентов, обучающихся в организации “в рамках академической мобильности”</a></li>
+<li class="chapter" data-level="46" data-path="ind61_info.html"><a href="ind61_info.html"><i class="fa fa-check"></i><b>46</b> Доля иностранцев в НПР</a></li>
+<li class="chapter" data-level="47" data-path="ind62_info.html"><a href="ind62_info.html"><i class="fa fa-check"></i><b>47</b> Численность зарубежных ведущих профессоров, преподавателей и исследователей</a></li>
+<li class="chapter" data-level="48" data-path="ind63_info.html"><a href="ind63_info.html"><i class="fa fa-check"></i><b>48</b> Доля иностранных (кроме СНГ) аспирантов-адъюнктов-ординаторов-интернов-аспирантов-стажеров</a></li>
+<li class="chapter" data-level="49" data-path="ind64_info.html"><a href="ind64_info.html"><i class="fa fa-check"></i><b>49</b> Доля иностранных (из СНГ) аспирантов-адъюнктов-ординаторов-интернов-аспирантов-стажеров</a></li>
+<li class="chapter" data-level="50" data-path="ind65_info.html"><a href="ind65_info.html"><i class="fa fa-check"></i><b>50</b> Доля иностранных (кроме СНГ) аспирантов</a></li>
+<li class="chapter" data-level="51" data-path="ind66_info.html"><a href="ind66_info.html"><i class="fa fa-check"></i><b>51</b> Доля иностранных (из СНГ) аспирантов</a></li>
+<li class="chapter" data-level="52" data-path="ind67_info.html"><a href="ind67_info.html"><i class="fa fa-check"></i><b>52</b> Объем НИОКР, оплаченных иностранными физ. и юр. лицами</a></li>
+<li class="chapter" data-level="53" data-path="ind68_info.html"><a href="ind68_info.html"><i class="fa fa-check"></i><b>53</b> Объем доходов от обучения иностранцев</a></li>
+<li class="chapter" data-level="54" data-path="ind69_info.html"><a href="ind69_info.html"><i class="fa fa-check"></i><b>54</b> Доходы вуза из иностранных источников</a></li>
+<li class="chapter" data-level="55" data-path="ind70_info.html"><a href="ind70_info.html"><i class="fa fa-check"></i><b>55</b> Доля иностранных студентов (кроме стран СНГ), завершивших обучение в приведенном выпуске</a></li>
+<li class="chapter" data-level="56" data-path="ind71_info.html"><a href="ind71_info.html"><i class="fa fa-check"></i><b>56</b> Доля иностранных студентов (из СНГ), завершивших обучение в приведенном выпуске</a></li>
+<li class="chapter" data-level="57" data-path="ind72_info.html"><a href="ind72_info.html"><i class="fa fa-check"></i><b>57</b> Численность иностранных студентов, обучающихся в организации “в рамках академической мобильности” на 100 студентов приведенного контингента</a></li>
+<li class="chapter" data-level="58" data-path="ind73_info.html"><a href="ind73_info.html"><i class="fa fa-check"></i><b>58</b> Внебюджетные доходы на 1 НПР</a></li>
+<li class="chapter" data-level="59" data-path="ind74_info.html"><a href="ind74_info.html"><i class="fa fa-check"></i><b>59</b> Доля внебюджетных доходов</a></li>
+<li class="chapter" data-level="60" data-path="ind75_info.html"><a href="ind75_info.html"><i class="fa fa-check"></i><b>60</b> Средняя з/п в % к средней по экономике региона</a></li>
+<li class="chapter" data-level="61" data-path="ind76_info.html"><a href="ind76_info.html"><i class="fa fa-check"></i><b>61</b> Суммарные доходы организации в расчете на 1 чел. приведенного контингента</a></li>
+<li class="chapter" data-level="62" data-path="ind77_info.html"><a href="ind77_info.html"><i class="fa fa-check"></i><b>62</b> Доходы вуза из всех источников в расчете на одного НПР</a></li>
+<li class="chapter" data-level="63" data-path="ind78_info.html"><a href="ind78_info.html"><i class="fa fa-check"></i><b>63</b> Общая площадь учебно-лабораторных помещений на 1 чел. приведенного контингента</a></li>
+<li class="chapter" data-level="64" data-path="ind79_info.html"><a href="ind79_info.html"><i class="fa fa-check"></i><b>64</b> Общая площадь учебно-лабораторных помещений на 1 чел. приведенного контингента, имеющихся у вуза на праве собственности</a></li>
+<li class="chapter" data-level="65" data-path="ind80_info.html"><a href="ind80_info.html"><i class="fa fa-check"></i><b>65</b> Общая площадь учебно-лабораторных помещений на 1 чел. приведенного контингента, закрепленных за вузом на праве оперативного управления</a></li>
+<li class="chapter" data-level="66" data-path="ind81_info.html"><a href="ind81_info.html"><i class="fa fa-check"></i><b>66</b> Общая площадь учебно-лабораторных помещений на 1 чел. приведенного контингента, предоставленных в безвозмездное пользование</a></li>
+<li class="chapter" data-level="67" data-path="ind82_info.html"><a href="ind82_info.html"><i class="fa fa-check"></i><b>67</b> Общая площадь учебно-лабораторных помещений на 1 чел. приведенного контингента, предоставленных вузу в аренду</a></li>
+<li class="chapter" data-level="68" data-path="ind83_info.html"><a href="ind83_info.html"><i class="fa fa-check"></i><b>68</b> Обеспеченность персональными компьютерами</a></li>
+<li class="chapter" data-level="69" data-path="ind84_info.html"><a href="ind84_info.html"><i class="fa fa-check"></i><b>69</b> Доля новых машин и оборудования (не старше 5 лет)</a></li>
+<li class="chapter" data-level="70" data-path="ind85_info.html"><a href="ind85_info.html"><i class="fa fa-check"></i><b>70</b> Обеспеченность учебниками и учебными пособиями</a></li>
+<li class="chapter" data-level="71" data-path="ind86_info.html"><a href="ind86_info.html"><i class="fa fa-check"></i><b>71</b> Доля кандидатов наук</a></li>
+<li class="chapter" data-level="72" data-path="ind87_info.html"><a href="ind87_info.html"><i class="fa fa-check"></i><b>72</b> Доля докторов наук</a></li>
+<li class="chapter" data-level="73" data-path="ind88_info.html"><a href="ind88_info.html"><i class="fa fa-check"></i><b>73</b> Доля кандидатов и докторов наук (без совместителей)</a></li>
+<li class="chapter" data-level="74" data-path="ind89_info.html"><a href="ind89_info.html"><i class="fa fa-check"></i><b>74</b> Число кандидатов и докторовн наук на 100 студентов</a></li>
+<li class="chapter" data-level="75" data-path="ind90_info.html"><a href="ind90_info.html"><i class="fa fa-check"></i><b>75</b> Доля штатных работников ППС в общей численности ППС</a></li>
+<li class="chapter" data-level="76" data-path="ind91_info.html"><a href="ind91_info.html"><i class="fa fa-check"></i><b>76</b> Доля выпускников отчетного года, обратившихся в за содействием</a></li>
+<li class="chapter" data-level="77" data-path="ind92_info.html"><a href="ind92_info.html"><i class="fa fa-check"></i><b>77</b> Доля выпускников отчетного года, обратившихся за содействием и признанных безработными</a></li>
+<li class="chapter" data-level="78" data-path="ind93_info.html"><a href="ind93_info.html"><i class="fa fa-check"></i><b>78</b> Доля нетрудоустроенных в течение года из выпускников отчетного года из числа обратившихся за содействием в трудоустройстве</a></li>
+<li class="chapter" data-level="79" data-path="ind94_info.html"><a href="ind94_info.html"><i class="fa fa-check"></i><b>79</b> Доля трудоустроившихся в течение года выпускников</a></li>
+<li class="chapter" data-level="80" data-path="ind190_info.html"><a href="ind190_info.html"><i class="fa fa-check"></i><b>80</b> Общая численность обучающихся по программам ВПО</a></li>
+<li class="chapter" data-level="81" data-path="ind191_info.html"><a href="ind191_info.html"><i class="fa fa-check"></i><b>81</b> Общая численность обучающихся по программам ВПО в очной форме</a></li>
+<li class="chapter" data-level="82" data-path="ind192_info.html"><a href="ind192_info.html"><i class="fa fa-check"></i><b>82</b> Общая численность обучающихся по программам ВПО в очно-заочной форме</a></li>
+<li class="chapter" data-level="83" data-path="ind193_info.html"><a href="ind193_info.html"><i class="fa fa-check"></i><b>83</b> Общая численность обучающихся по программам ВПО в заочной форме</a></li>
+<li class="chapter" data-level="84" data-path="ind249_info.html"><a href="ind249_info.html"><i class="fa fa-check"></i><b>84</b> Общая численность обучающихся по программам ВПО экстерном</a></li>
+<li class="chapter" data-level="85" data-path="ind194_info.html"><a href="ind194_info.html"><i class="fa fa-check"></i><b>85</b> Cредний балл ЕГЭ</a></li>
+<li class="chapter" data-level="86" data-path="ind195_info.html"><a href="ind195_info.html"><i class="fa fa-check"></i><b>86</b> Доля студентов очной формы</a></li>
+<li class="chapter" data-level="87" data-path="ind196_info.html"><a href="ind196_info.html"><i class="fa fa-check"></i><b>87</b> Доля бакалавров</a></li>
+<li class="chapter" data-level="88" data-path="ind197_info.html"><a href="ind197_info.html"><i class="fa fa-check"></i><b>88</b> Доля магистров</a></li>
+<li class="chapter" data-level="89" data-path="ind198_info.html"><a href="ind198_info.html"><i class="fa fa-check"></i><b>89</b> Слушатели ДПО</a></li>
+<li class="chapter" data-level="90" data-path="ind199_info.html"><a href="ind199_info.html"><i class="fa fa-check"></i><b>90</b> Учащиеся СПО</a></li>
+<li class="chapter" data-level="91" data-path="ind200_info.html"><a href="ind200_info.html"><i class="fa fa-check"></i><b>91</b> Число предприятий, с которыми заключены договоры на подготовку специалистов</a></li>
+<li class="chapter" data-level="92" data-path="ind201_info.html"><a href="ind201_info.html"><i class="fa fa-check"></i><b>92</b> Базы практики</a></li>
+<li class="chapter" data-level="93" data-path="ind202_info.html"><a href="ind202_info.html"><i class="fa fa-check"></i><b>93</b> Объем НИОКР</a></li>
+<li class="chapter" data-level="94" data-path="ind203_info.html"><a href="ind203_info.html"><i class="fa fa-check"></i><b>94</b> Объем научных, научно технических, творческих услуги и разработок</a></li>
+<li class="chapter" data-level="95" data-path="ind204_info.html"><a href="ind204_info.html"><i class="fa fa-check"></i><b>95</b> Количество публикаций</a></li>
+<li class="chapter" data-level="96" data-path="ind205_info.html"><a href="ind205_info.html"><i class="fa fa-check"></i><b>96</b> Количество бизнес-инкубаторов</a></li>
+<li class="chapter" data-level="97" data-path="ind206_info.html"><a href="ind206_info.html"><i class="fa fa-check"></i><b>97</b> Количество технопарков</a></li>
+<li class="chapter" data-level="98" data-path="ind207_info.html"><a href="ind207_info.html"><i class="fa fa-check"></i><b>98</b> Количество центров коллективного пользования научным оборудованием</a></li>
+<li class="chapter" data-level="99" data-path="ind208_info.html"><a href="ind208_info.html"><i class="fa fa-check"></i><b>99</b> Количество малых предприятий</a></li>
+<li class="chapter" data-level="100" data-path="ind209_info.html"><a href="ind209_info.html"><i class="fa fa-check"></i><b>100</b> Общая численность аспирантов</a></li>
+<li class="chapter" data-level="101" data-path="ind210_info.html"><a href="ind210_info.html"><i class="fa fa-check"></i><b>101</b> Доля аспирантов, обучающихся в очной форме</a></li>
+<li class="chapter" data-level="102" data-path="ind211_info.html"><a href="ind211_info.html"><i class="fa fa-check"></i><b>102</b> Общая численность докторантов</a></li>
+<li class="chapter" data-level="103" data-path="ind212_info.html"><a href="ind212_info.html"><i class="fa fa-check"></i><b>103</b> Число диссертационных советов</a></li>
+<li class="chapter" data-level="104" data-path="ind213_info.html"><a href="ind213_info.html"><i class="fa fa-check"></i><b>104</b> Общая численность работников</a></li>
+<li class="chapter" data-level="105" data-path="ind214_info.html"><a href="ind214_info.html"><i class="fa fa-check"></i><b>105</b> Численность ППС</a></li>
+<li class="chapter" data-level="106" data-path="ind215_info.html"><a href="ind215_info.html"><i class="fa fa-check"></i><b>106</b> Численность научных работников</a></li>
+<li class="chapter" data-level="107" data-path="ind216_info.html"><a href="ind216_info.html"><i class="fa fa-check"></i><b>107</b> Доля ППС, имеющих ученые степени</a></li>
+<li class="chapter" data-level="108" data-path="ind217_info.html"><a href="ind217_info.html"><i class="fa fa-check"></i><b>108</b> Доля научных работников, имеющих ученые степени</a></li>
+<li class="chapter" data-level="109" data-path="ind218_info.html"><a href="ind218_info.html"><i class="fa fa-check"></i><b>109</b> Доля ППС возрастной категории моложе 65 лет</a></li>
+<li class="chapter" data-level="110" data-path="ind219_info.html"><a href="ind219_info.html"><i class="fa fa-check"></i><b>110</b> Доля ППС возрастной категории моложе 40 лет</a></li>
+<li class="chapter" data-level="111" data-path="ind220_info.html"><a href="ind220_info.html"><i class="fa fa-check"></i><b>111</b> Средняя заработная плата ППС</a></li>
+<li class="chapter" data-level="112" data-path="ind221_info.html"><a href="ind221_info.html"><i class="fa fa-check"></i><b>112</b> Средняя заработная плата научных работников</a></li>
+<li class="chapter" data-level="113" data-path="ind222_info.html"><a href="ind222_info.html"><i class="fa fa-check"></i><b>113</b> Численность иностранных студентов</a></li>
+<li class="chapter" data-level="114" data-path="ind223_info.html"><a href="ind223_info.html"><i class="fa fa-check"></i><b>114</b> Доля иностранных студентов</a></li>
+<li class="chapter" data-level="115" data-path="ind224_info.html"><a href="ind224_info.html"><i class="fa fa-check"></i><b>115</b> Число “совместных” образовательных программ</a></li>
+<li class="chapter" data-level="116" data-path="ind225_info.html"><a href="ind225_info.html"><i class="fa fa-check"></i><b>116</b> Число студентов на “совместных” образовательных программах</a></li>
+<li class="chapter" data-level="117" data-path="ind226_info.html"><a href="ind226_info.html"><i class="fa fa-check"></i><b>117</b> Численность иностранных аспирантов</a></li>
+<li class="chapter" data-level="118" data-path="ind227_info.html"><a href="ind227_info.html"><i class="fa fa-check"></i><b>118</b> Число статей, подготовленных совместно с зарубежными организациями</a></li>
+<li class="chapter" data-level="119" data-path="ind228_info.html"><a href="ind228_info.html"><i class="fa fa-check"></i><b>119</b> Доходы из иностранных источников на выполнение НИОКР</a></li>
+<li class="chapter" data-level="120" data-path="ind229_info.html"><a href="ind229_info.html"><i class="fa fa-check"></i><b>120</b> Доходы вуза от образовательной деятельности из иностранных источников</a></li>
+<li class="chapter" data-level="121" data-path="ind230_info.html"><a href="ind230_info.html"><i class="fa fa-check"></i><b>121</b> Количество созданных РИД, имеющих правовую охрану за пределами России</a></li>
+<li class="chapter" data-level="122" data-path="ind231_info.html"><a href="ind231_info.html"><i class="fa fa-check"></i><b>122</b> Общая площадь зданий (помещений)</a></li>
+<li class="chapter" data-level="123" data-path="ind232_info.html"><a href="ind232_info.html"><i class="fa fa-check"></i><b>123</b> Площадь учебно-лабораторных зданий</a></li>
+<li class="chapter" data-level="124" data-path="ind233_info.html"><a href="ind233_info.html"><i class="fa fa-check"></i><b>124</b> Площадь, предназначенная для научно-исследовательских подразделений</a></li>
+<li class="chapter" data-level="125" data-path="ind234_info.html"><a href="ind234_info.html"><i class="fa fa-check"></i><b>125</b> Площадь общежитий</a></li>
+<li class="chapter" data-level="126" data-path="ind235_info.html"><a href="ind235_info.html"><i class="fa fa-check"></i><b>126</b> Площадь крытых спортивных сооружений</a></li>
+<li class="chapter" data-level="127" data-path="ind236_info.html"><a href="ind236_info.html"><i class="fa fa-check"></i><b>127</b> Доля студентов, не обеспеченных общежитием</a></li>
+<li class="chapter" data-level="128" data-path="ind237_info.html"><a href="ind237_info.html"><i class="fa fa-check"></i><b>128</b> Количество персональных компьютеров</a></li>
+<li class="chapter" data-level="129" data-path="ind238_info.html"><a href="ind238_info.html"><i class="fa fa-check"></i><b>129</b> Доля персональных компьютеров, имеющих доступ к Интернету</a></li>
+<li class="chapter" data-level="130" data-path="ind239_info.html"><a href="ind239_info.html"><i class="fa fa-check"></i><b>130</b> Наличие электронной библиотечной системы</a></li>
+<li class="chapter" data-level="131" data-path="ind240_info.html"><a href="ind240_info.html"><i class="fa fa-check"></i><b>131</b> Доходы из всех источников</a></li>
+<li class="chapter" data-level="132" data-path="ind241_info.html"><a href="ind241_info.html"><i class="fa fa-check"></i><b>132</b> Доходы из внебюджетных источников</a></li>
+<li class="chapter" data-level="133" data-path="ind242_info.html"><a href="ind242_info.html"><i class="fa fa-check"></i><b>133</b> Доля доходов из внебюджетных источников</a></li>
+<li class="chapter" data-level="134" data-path="ind243_info.html"><a href="ind243_info.html"><i class="fa fa-check"></i><b>134</b> Доля доходов из федерального бюджета</a></li>
+<li class="chapter" data-level="135" data-path="ind244_info.html"><a href="ind244_info.html"><i class="fa fa-check"></i><b>135</b> Доля доходов из бюджета субъекта РФ и местного бюджета</a></li>
+<li class="chapter" data-level="136" data-path="ind245_info.html"><a href="ind245_info.html"><i class="fa fa-check"></i><b>136</b> Доля доходов от образовательной деятельности</a></li>
+<li class="chapter" data-level="137" data-path="ind246_info.html"><a href="ind246_info.html"><i class="fa fa-check"></i><b>137</b> Доля доходов от научных исследований и разработок</a></li>
+<li class="chapter" data-level="138" data-path="ind247_info.html"><a href="ind247_info.html"><i class="fa fa-check"></i><b>138</b> Доля внебюджетных средств в доходах от образовательной деятельности</a></li>
+<li class="chapter" data-level="139" data-path="ind248_info.html"><a href="ind248_info.html"><i class="fa fa-check"></i><b>139</b> Доля внебюджетных средств в доходах от научных исследований и разработок</a></li>
 <li class="divider"></li>
 <li><a href="" target="blank">Published with bookdown</a></li>
 
@@ -138,7 +359,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/rstudio/bookdown-demo/edit/master/%s",
+"link": "https://github.com/alexeykovalenko/monitoring_vpo/edit/master/%s",
 "text": "Edit"
 },
 "history": {

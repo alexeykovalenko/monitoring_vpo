@@ -1,6 +1,6 @@
 --- 
 title: "Показатели мониторинга эффективности деятельности образовательных организаций высшего образования 2013 - 2021 г."
-author: ""
+author: "Alexey Kovalenko"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 code_folding: hide
@@ -9,7 +9,7 @@ documentclass: book
 bibliography: [book.bib, packages.bib]
 biblio-style: apalike
 link-citations: yes
-github-repo: rstudio/bookdown-demo
+github-repo: https://github.com/alexeykovalenko/monitoring_vpo
 description: "Таблицы значений показателей, в разрезе вузов (образовательных организаций, реализующих программы ВПО) и годов наблюдения. Исходные данные извлечены из представленных на сайте ГИВЦ материалов (https://monitoring.miccedu.ru). The output format for this example is bookdown::gitbook."
 ---
 
