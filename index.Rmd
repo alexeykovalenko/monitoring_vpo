@@ -25,11 +25,12 @@ description: "Таблицы значений показателей, в раз�
 
 
 
-Все представленные материалы распространяются на условиях [лицензии Creative Commons «Attribution-NonCommercial-ShareAlike» («Атрибуция-Некоммерчески-СохранениеУсловий») 4.0 Всемирная Всемирная](https://creativecommons.org/licenses/by-nc/4.0/deed.ru)
+
+Все представленные материалы распространяются на условиях [лицензии Creative Commons «Attribution» («Атрибуция») 4.0 Всемирная](https://creativecommons.org/licenses/by/4.0/deed.ru)
 
 This work is licensed under a [Creative Commons Attribution 4.0 International License](http://creativecommons.org/licenses/by/4.0/)
 
-![](images/cc-by-nc-sa-88x31.png)
+![](images/cc-by-88x31.png)
 
 ```{r include=FALSE}
 # automatically create a bib database for R packages
